@@ -1,5 +1,6 @@
 /**
  * WebSerialTransport — Web Serial API transport for TA612C (Chromium only).
+ * Also runs over the WebUSB CH340 driver (ch340.js), which mimics SerialPort.
  *
  * Events emitted:
  *   'connected'    — serial port opened
@@ -22,9 +23,9 @@ export class WebSerialTransport extends EventTarget {
     return 'serial' in navigator;
   }
 
-  async connect() {
+  async connect(requestPort = () => navigator.serial.requestPort()) {
     try {
-      this.#port = await navigator.serial.requestPort();
+      this.#port = await requestPort();
       await this.#port.open({ baudRate: 9600, dataBits: 8, stopBits: 1, parity: 'none' });
       this.#writer = this.#port.writable.getWriter();
       this.#emit('connected');

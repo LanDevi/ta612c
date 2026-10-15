@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setRecordingState(false);
 
   const serialBtn = document.getElementById('connectSerial');
-  if (!conn.hasWebSerial && serialBtn) {
+  if (!conn.hasUsb && serialBtn) {
     serialBtn.style.display = 'none';
   }
 

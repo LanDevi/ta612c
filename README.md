@@ -28,6 +28,7 @@ This starts a local server at **http://localhost:8000** and opens your browser.
 ### Connect to your TA612C
 
 - **Chrome/Edge:** Click **USB** to connect directly via Web Serial API
+- **Android tablet/phone (Chrome):** Plug the TA612C in via USB-OTG and click **USB** — Chrome drives the CH340 chip directly over WebUSB, no PC needed
 - **Firefox/Safari/remote:** Start the bridge, then click **Bridge**:
   ```bash
   uv run bridge.py                        # auto-detect serial port
@@ -46,6 +47,7 @@ js/
   main.js           Entry point, polling loop, event wiring
   protocol.js       TA612C binary protocol: frame parse, commands, checksum
   serial.js         Web Serial transport (Chromium only)
+  ch340.js          CH340 USB-serial driver over WebUSB (Android Chrome)
   websocket.js      WebSocket transport (connects to bridge.py)
   connection.js     ConnectionManager — uniform event interface
   chart-manager.js  Chart.js wrapper (4 datasets, one per channel)

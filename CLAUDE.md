@@ -15,6 +15,7 @@ js/
   main.js               → Entry point: imports modules, polling loop, event wiring
   protocol.js           → TA612C binary protocol: frame parse, commands, checksum
   serial.js             → WebSerialTransport (Web Serial API, Chromium only)
+  ch340.js              → CH340 driver over WebUSB, mimics SerialPort (Android Chrome)
   websocket.js          → WebSocketTransport (connects to bridge.py)
   connection.js         → ConnectionManager: picks transport, uniform event interface
   chart-manager.js      → ChartManager wrapping Chart.js (4 datasets, one per channel)
@@ -54,6 +55,8 @@ Two transport backends implement the same EventTarget interface:
 - **WebSocket** (`websocket.js`) — connects to `bridge.py` for Firefox/Safari/any browser
 
 Both use `protocol.js` for binary frame parsing. `ConnectionManager` (`connection.js`) auto-detects browser capabilities.
+
+Android Chrome has no Web Serial access to USB adapters, so there the USB button hands `WebSerialTransport` a port from `ch340.js` instead: a WebUSB driver for the TA612C's CH340 chip (init sequence from Linux `ch341.c`, 9600 baud only) exposing `open`/`readable`/`writable`/`close` like a `SerialPort`.
 
 ## Running
 
